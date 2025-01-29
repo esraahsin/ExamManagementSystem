@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.ExamDTO;
 import com.example.demo.service.ExamService;
 @RestController
-@RequestMapping("/api/exams")
+@RequestMapping("/api/admin/exams")
 @CrossOrigin(origins = "http://localhost:3000")
-public class ExamController {
+public class ExamAdminController {
     
     @Autowired
     private ExamService examService;
