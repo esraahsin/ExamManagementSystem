@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -80,4 +83,6 @@ public class ScheduleLog implements Serializable {
     public Timestamp getTimestamp() {
         return timestamp;
     }
-}
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = Timestamp.valueOf(timestamp.atZone(ZoneId.systemDefault()).toInstant().toString());
+}}

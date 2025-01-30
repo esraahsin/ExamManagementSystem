@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -41,7 +42,7 @@ public class Validation implements Serializable {
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    private Timestamp validationDate;
+    private LocalDate validationDate;
 
     // Constructors
     public Validation() {}
@@ -94,7 +95,10 @@ public class Validation implements Serializable {
         this.comments = comments;
     }
 
-    public Timestamp getValidationDate() {
+    public LocalDate getValidationDate() {
         return validationDate;
+    }
+    public void setValidationDate(LocalDate d){
+        this.validationDate = d;
     }
 }
