@@ -2,18 +2,20 @@ package com.example.demo.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+
 @Entity
 @Table(name = "exams")
+@AllArgsConstructor
 public class Exam implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int examId;
     
     @Column(nullable = false, length = 100)
@@ -21,8 +23,7 @@ public class Exam implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "department_id")
-        @JsonIgnoreProperties({"exams", "hibernateLazyInitializer", "handler"})
-
+    @JsonIgnoreProperties({"exams", "hibernateLazyInitializer", "handler"})
     private Department department;
     
     @Column(nullable = false)
@@ -38,13 +39,12 @@ public class Exam implements Serializable {
     
     private Integer coefficient;
     
-    @Column(nullable = false)
-    private Date createdAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
     
-    @Column(nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     
-    private boolean isDuplicate;
+    private boolean isDuplicate = false;
     
     @OneToMany(mappedBy = "exam")
     private List<ExamRoom> examRooms;
@@ -54,6 +54,21 @@ public class Exam implements Serializable {
     
     @OneToMany(mappedBy = "exam")
     private List<ExamStudent> examStudents;
+    
+    // Constructeur
+    public Exam() {
+        super();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public int getExamId() {
         return examId;
@@ -119,19 +134,19 @@ public class Exam implements Serializable {
         this.coefficient = coefficient;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -36,10 +36,7 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
-    // Get all notifications for a user
-    public List<Notification> getUserNotifications(int userId) {
-        return notificationRepository.findByUserId(userId);
-    }
+   
 
     // Mark a notification as read
     public Notification markAsRead(int notificationId) {
