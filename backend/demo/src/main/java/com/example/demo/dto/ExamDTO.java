@@ -11,7 +11,7 @@ public class ExamDTO {
     private Integer difficulty;
     private Integer coefficient;
     private String departmentName;
-    private Boolean isDuplicate;
+    private Boolean isDuplicate=false;
 
     // Constructor
     public ExamDTO() {}

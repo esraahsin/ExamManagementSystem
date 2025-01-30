@@ -9,6 +9,5 @@ import com.example.demo.model.ScheduleLog;
 
 @Repository
 public interface ScheduleLogRepository extends JpaRepository<ScheduleLog, Integer> {
-    List<ScheduleLog> findByPerformedById(int performedById);
-    List<ScheduleLog> findByAction(String action);
+   
 }

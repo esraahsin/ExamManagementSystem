@@ -11,10 +11,4 @@ import com.example.demo.model.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
-    List<Room> findByCapacityGreaterThanEqual(int capacity);
-    
-    List<Room> findByIsAvailable(boolean isAvailable);
-    
-    @Query("SELECT r FROM Room r WHERE r.capacity >= :minCapacity AND r.isAvailable = true")
-    List<Room> findAvailableRoomsWithCapacity(@Param("minCapacity") int minCapacity);
-}
+ }
