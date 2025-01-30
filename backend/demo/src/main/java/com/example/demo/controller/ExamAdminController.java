@@ -29,4 +29,5 @@ public class ExamAdminController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    //add new exam, delete and update 
 }
