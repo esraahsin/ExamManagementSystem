@@ -100,4 +100,40 @@ public class ExamService {
 
         return exam;
     }
+    public boolean deleteExam(Integer id) {
+        if (examRepository.existsById(id)) {
+            examRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public ExamDTO updateExam(Integer id, ExamDTO examDTO) {
+        Optional<Exam> optionalExam = examRepository.findById(id);
+        if (optionalExam.isPresent()) {
+            Exam existingExam = optionalExam.get();
+
+            // Mettre à jour les champs de l'examen existant
+            existingExam.setSubject(examDTO.getSubject());
+            existingExam.setExamDate(java.sql.Date.valueOf(examDTO.getExamDate()));
+            existingExam.setStartTime(java.sql.Time.valueOf(examDTO.getStartTime()));
+            existingExam.setEndTime(java.sql.Time.valueOf(examDTO.getEndTime()));
+            existingExam.setDifficulty(examDTO.getDifficulty());
+            existingExam.setCoefficient(examDTO.getCoefficient());
+            existingExam.setDuplicate(examDTO.getIsDuplicate());
+
+            // Mettre à jour le département si nécessaire
+            if (examDTO.getDepartmentName() != null) {
+                Department department = departmentRepository.findByName(examDTO.getDepartmentName());
+                if (department != null) {
+                    existingExam.setDepartment(department);
+                }
+            }
+
+            Exam updatedExam = examRepository.save(existingExam);
+            return convertToDTO(updatedExam);
+        }
+        return null; // Retourne null si l'examen n'existe pas
+    }
+
 }
