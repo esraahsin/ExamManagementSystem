@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
 import './CalendarView.css'; // Importez le fichier CSS
+import { Link } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -64,7 +65,7 @@ const CalendarView = () => {
     <div className="calendar-container">
       <div className="calendar-header">
         <h1>Exam Calendar</h1>
-        <button onClick={() => alert('Add Exam')}>Add Exam</button>
+        <Link to="/admin/exams/addexam">Add Exam</Link>
       </div>
       
       <div className="calendar-wrapper">
