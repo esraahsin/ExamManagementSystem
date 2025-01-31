@@ -5,18 +5,15 @@ const ExamsPage = () => {
     const [exams, setExams] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
         search: '',
         startDate: '',
         endDate: '',
         startTime: '',
-        endTime: ''
+        endTime: '',
+        department: '' // Add department filter
     });
 
-    const [editingExam, setEditingExam] = useState(null);
 
     useEffect(() => {
         fetchExams();
@@ -57,18 +54,20 @@ const ExamsPage = () => {
         [e.target.name]: e.target.value
     });
 };
-
 const filteredExams = exams.filter(exam => {
     const examDate = new Date(exam.examDate);
     const examStart = new Date(`${exam.examDate}T${exam.startTime}`);
     const examEnd = new Date(`${exam.examDate}T${exam.endTime}`);
 
-    // Filtre texte
+    // Text filter (now only searches subject)
     const searchLower = filters.search.toLowerCase();
-    const matchesSearch = exam.subject.toLowerCase().includes(searchLower) || 
-                        (exam.departmentName?.toLowerCase().includes(searchLower));
+    const matchesSearch = exam.subject.toLowerCase().includes(searchLower);
 
-    // Filtre date
+    // Department filter
+    const matchesDepartment = !filters.department || 
+                            exam.departmentName === filters.department;
+
+    // Date filter (existing)
     let matchesDate = true;
     if (filters.startDate) {
         const startDate = new Date(filters.startDate);
@@ -79,7 +78,7 @@ const filteredExams = exams.filter(exam => {
         matchesDate = matchesDate && examDate <= endDate;
     }
 
-    // Filtre heure
+    // Time filter (existing)
     let matchesTime = true;
     if (filters.startTime) {
         const [startHours, startMinutes] = filters.startTime.split(':');
@@ -94,7 +93,7 @@ const filteredExams = exams.filter(exam => {
         matchesTime = matchesTime && examEnd <= endTime;
     }
 
-    return matchesSearch && matchesDate && matchesTime;
+    return matchesSearch && matchesDepartment && matchesDate && matchesTime;
 });
 
     if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
@@ -114,7 +113,17 @@ const filteredExams = exams.filter(exam => {
                             value={filters.search}
                             onChange={handleFilterChange}
                         />
-                        
+                         <select
+        name="department"
+        className="department-filter"
+        value={filters.department}
+        onChange={handleFilterChange}
+    >
+        <option value="">All Departments</option>
+        {[...new Set(exams.map(exam => exam.departmentName))].map(dept => (
+            <option key={dept} value={dept}>{dept}</option>
+        ))}
+    </select>
                         <div className="time-filters">
                             <div className="filter-group">
                                 <label>Start Date:</label>
