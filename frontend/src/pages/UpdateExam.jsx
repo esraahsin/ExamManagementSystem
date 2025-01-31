@@ -24,7 +24,7 @@ const UpdateExam = () => {
     const difficulties = [1, 2, 3, 4, 5]; // Difficulté de 1 à 5
     const coefficients = [1, 2, 3, 4, 5]; // Coefficients possibles
 
-    // Charger les données de l'examen à mettre à jour
+    // Charger les données de l'examen à me5ttre à jour
     useEffect(() => {
         const fetchExam = async () => {
             try {

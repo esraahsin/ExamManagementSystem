@@ -11,6 +11,7 @@ function App() {
     <Route path="/exams" element={<ExamsPage />} />
     <Route path="/admin/exams" element={<ExamsPage />} />
     <Route path="/admin/exams/addexam" element={<AddExam />} />
+    
 
     </Routes>
     </BrowserRouter>
