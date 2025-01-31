@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./ExamPage.css"
+import { Link } from 'react-router-dom';
 const ExamsPage = () => {
     const [exams, setExams] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ const ExamsPage = () => {
     };
 
     const handleDelete = async (examId) => {
-      /*  if (window.confirm('Are you sure you want to delete this exam?')) {
+       if (window.confirm('Are you sure you want to delete this exam?')) {
             try {
                 await axios.delete(`http://localhost:8080/api/admin/exams/${examId}`);
                 setExams(exams.filter(exam => exam.examId !== examId));
@@ -40,8 +41,8 @@ const ExamsPage = () => {
                 console.error('Error deleting exam:', error);
                 alert('Failed to delete exam');
             }
-        }*/
-    };
+        
+    };}
 
     const handleUpdate = (exam) => {
         // For full update functionality, you'd typically open a modal or navigate to an edit page
@@ -201,6 +202,7 @@ const filteredExams = exams.filter(exam => {
                     ))}
                 </div>
             )}
+            <Link to="/admin/dashboard">Go back to Dashboard</Link>
         </div>
     );
 

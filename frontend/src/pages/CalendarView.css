@@ -1,0 +1,86 @@
+/* Conteneur principal */
+.calendar-container {
+    padding: 24px;
+}
+
+/* En-tête du calendrier */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.calendar-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a202c; /* Couleur de texte gris foncé */
+}
+
+.calendar-header button {
+    background-color: #3b82f6; /* Couleur bleue */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-header button:hover {
+    background-color: #2563eb; /* Couleur bleue plus foncée au survol */
+}
+
+/* Conteneur du calendrier */
+.calendar-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+/* Style des événements */
+.rbc-event {
+    background-color: #3b82f6; /* Couleur bleue */
+    border-radius: 4px;
+    border: none;
+    color: white;
+    padding: 2px 5px;
+}
+/* Messages de chargement et d'erreur */
+.loading-message {
+    padding: 16px;
+    color: #4a5568; /* Couleur de texte gris */
+}
+
+.error-message {
+    padding: 16px;
+    color: #e53e3e; /* Couleur de texte rouge */
+}
+/* Style de l'en-tête du calendrier */
+.rbc-header {
+    background-color: #f0f4f8; /* Couleur de fond gris clair */
+    color: #4a5568; /* Couleur de texte gris */
+    padding: 8px 0;
+    font-weight: 500;
+}
+
+/* Style des boutons de navigation */
+.rbc-btn-group button {
+    background-color: white;
+    border: 1px solid #e2e8f0; /* Bordure grise */
+    color: #4a5568; /* Couleur de texte gris */
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.rbc-btn-group button:hover {
+    background-color: #f0f4f8; /* Couleur de fond gris clair au survol */
+}
+
+/* Style pour aujourd'hui */
+.rbc-today {
+    background-color: #f0f4f8; /* Couleur de fond gris clair */
+}

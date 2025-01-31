@@ -1,4 +1,5 @@
 package com.example.demo.dto;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,12 +12,10 @@ public class ExamDTO {
     private Integer difficulty;
     private Integer coefficient;
     private String departmentName;
-    private Boolean isDuplicate=false;
+    private Boolean isDuplicate = false;
+    private String speciality; // Nouvel attribut
 
-    // Constructor
-    public ExamDTO() {}
-
-    // Getters and Setters
+    // Getters et Setters
     public Integer getExamId() {
         return examId;
     }
@@ -87,5 +86,13 @@ public class ExamDTO {
 
     public void setIsDuplicate(Boolean isDuplicate) {
         this.isDuplicate = isDuplicate;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 }

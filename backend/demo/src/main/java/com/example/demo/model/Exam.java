@@ -46,6 +46,9 @@ public class Exam implements Serializable {
     
     private boolean isDuplicate = false;
     
+    @Column(length = 50) // Ajout de la spécialité
+    private String speciality; // Nouvel attribut
+    
     @OneToMany(mappedBy = "exam")
     private List<ExamRoom> examRooms;
     
@@ -70,6 +73,7 @@ public class Exam implements Serializable {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // Getters et Setters
     public int getExamId() {
         return examId;
     }
@@ -156,6 +160,14 @@ public class Exam implements Serializable {
 
     public void setDuplicate(boolean isDuplicate) {
         this.isDuplicate = isDuplicate;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
     public List<ExamRoom> getExamRooms() {

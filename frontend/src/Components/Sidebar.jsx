@@ -20,7 +20,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     <div className="submenu">
                         <Link to="/admin/exams">Liste des Examens</Link>
                         <Link to="/admin/exams/addexam">Ajouter un Examen</Link>
-                        <Link to="/calendar">Calendrier</Link>
+                        <Link to="/admin/calendar">Calendrier</Link>
                     </div>
                 </div>
                 <div className="menu-item">
