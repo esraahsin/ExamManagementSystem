@@ -202,7 +202,6 @@ const filteredExams = exams.filter(exam => {
     return (
         <div className="exams-container">
             <div className="search-header">
-            // Add this at the top of ExamsPage's return statement
 <nav className="bg-gray-800 p-4">
   <div className="max-w-7xl mx-auto flex justify-between items-center">
     <div className="text-white text-xl font-bold">Exam Portal</div>
