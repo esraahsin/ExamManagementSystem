@@ -7,12 +7,17 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     
     @Column(nullable = false, length = 100)
@@ -29,6 +34,8 @@ public class User implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnore // Add this annotation
+
     private Department department;
     
     @Column(nullable = false)
@@ -38,7 +45,13 @@ public class User implements Serializable {
     private Date updatedAt;
     
     private boolean isActive;
-    //
+    @Column(length = 100) // Add specialty field
+    private String specialty;
+    public User() {
+    }
+    public User(String name2, String email2, String password2, String role2, String specialty) {
+        //TODO Auto-generated constructor stub
+    }
 
     public int getUserId() {
         return userId;
@@ -110,5 +123,16 @@ public class User implements Serializable {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+   
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+	public void setRoleString(String roleString) {
+        this.role = UserRole.valueOf(roleString); 
     }
 }

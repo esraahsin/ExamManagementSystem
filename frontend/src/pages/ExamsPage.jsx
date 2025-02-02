@@ -202,6 +202,21 @@ const filteredExams = exams.filter(exam => {
     return (
         <div className="exams-container">
             <div className="search-header">
+            // Add this at the top of ExamsPage's return statement
+<nav className="bg-gray-800 p-4">
+  <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <div className="text-white text-xl font-bold">Exam Portal</div>
+    <button
+      onClick={() => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+    >
+      Logout
+    </button>
+  </div>
+</nav>
                 <h1>Exams List</h1>
                 <div className="filters">
                     <input
