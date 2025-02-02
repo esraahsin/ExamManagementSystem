@@ -1,6 +1,8 @@
 package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.model.Room;
 
@@ -40,5 +42,8 @@ public class RoomService {
     // Récupérer toutes les salles
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
+    }
+    public List<Room> getAvailableRooms() {
+        return roomRepository.findByIsAvailableTrue(); // 🔹 Récupération des salles disponibles
     }
 }

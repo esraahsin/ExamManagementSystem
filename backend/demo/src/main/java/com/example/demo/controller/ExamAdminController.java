@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ExamDTO;
 import com.example.demo.model.Exam;
+import com.example.demo.model.Room;
 import com.example.demo.repository.ExamRepository;
 import com.example.demo.service.ExamService;
+import com.example.demo.service.RoomService;
+import com.example.demo.service.ExamRoomService;
 
 @RestController
 @RequestMapping("/api/admin/exams")
@@ -28,6 +31,11 @@ public class ExamAdminController {
 
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private RoomService roomService;
+
+   
 
     @GetMapping
     public ResponseEntity<List<ExamDTO>> getAllExams() {
@@ -79,5 +87,18 @@ public class ExamAdminController {
             System.err.println("Error in updateExam: " + e.getMessage());
             return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
         }
+    }
+
+    @GetMapping("/available-rooms")
+    public ResponseEntity<List<Room>> getAvailableRooms() {
+        List<Room> availableRooms = roomService.getAvailableRooms();
+        return ResponseEntity.ok(availableRooms); // 🔹 Retourne une réponse HTTP valide
+    }
+
+    @GetMapping("/exam-rooms")
+    public ResponseEntity<List<Room>> getExamRooms() {
+        // Now using the autowired examRoomService
+        List<Room> rooms = roomService.getAllRooms();
+        return ResponseEntity.ok(rooms);
     }
 }

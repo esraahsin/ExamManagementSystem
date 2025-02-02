@@ -1,22 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import "./ExamPage.css"
 const ExamsPage = () => {
     const [exams, setExams] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
         search: '',
         startDate: '',
         endDate: '',
         startTime: '',
-        endTime: ''
+        endTime: '',
+        department: '' // Add department filter
     });
+    const navigate = useNavigate(); // Add this line
+    const fetchAvailableRooms = async (exam) => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/rooms/available', {
+                params: {
+                    examDate: exam.examDate,
+                    startTime: exam.startTime,
+                    endTime: exam.endTime,
+                    minCapacity: exam.numberOfStudents // Supposons que numberOfStudents est une propriété de l'examen
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching available rooms:', error);
+            return [];
+        }
+    };
+    const handleAddRoom = async (exam) => {
+        const availableRooms = await fetchAvailableRooms(exam);
+        navigate(`/admin/exams/AddRoomPage`, { state: { exam, availableRooms } });
+    };
 
-    const [editingExam, setEditingExam] = useState(null);
 
     useEffect(() => {
         fetchExams();
@@ -35,40 +54,44 @@ const ExamsPage = () => {
     };
 
     const handleDelete = async (examId) => {
-      /*  if (window.confirm('Are you sure you want to delete this exam?')) {
-            try {
-                await axios.delete(`http://localhost:8080/api/admin/exams/${examId}`);
-                setExams(exams.filter(exam => exam.examId !== examId));
-            } catch (error) {
-                console.error('Error deleting exam:', error);
-                alert('Failed to delete exam');
-            }
-        }*/
+        if (!window.confirm("Are you sure you want to delete this exam?")) return;
+
+        try {
+            await axios.delete(`http://localhost:8080/api/exams/${examId}`);
+            setExams(exams.filter(exam => exam.examId !== examId)); 
+        } catch (error) {
+            console.error("Error deleting exam:", error);
+            alert("Failed to delete exam.");
+        }
     };
 
     const handleUpdate = (exam) => {
-        // For full update functionality, you'd typically open a modal or navigate to an edit page
-      /*  setEditingExam(exam);
-        alert(`Edit exam with ID: ${exam.examId}\nImplement edit functionality here`);
-  */  };
+        navigate(`/admin/exams/updateexam`, { state: { exam } });
+    };
   const handleFilterChange = (e) => {
     setFilters({
         ...filters,
         [e.target.name]: e.target.value
     });
 };
-
+const handleAddSupervisor = (exam) => {
+    // Naviguer vers la page d'ajout de surveillant avec l'examen sélectionné
+    navigate(`/admin/exams/AddSupervisorPage`, { state: { exam } });
+};
 const filteredExams = exams.filter(exam => {
     const examDate = new Date(exam.examDate);
     const examStart = new Date(`${exam.examDate}T${exam.startTime}`);
     const examEnd = new Date(`${exam.examDate}T${exam.endTime}`);
 
-    // Filtre texte
+    // Text filter (now only searches subject)
     const searchLower = filters.search.toLowerCase();
-    const matchesSearch = exam.subject.toLowerCase().includes(searchLower) || 
-                        (exam.departmentName?.toLowerCase().includes(searchLower));
+    const matchesSearch = exam.subject.toLowerCase().includes(searchLower);
 
-    // Filtre date
+    // Department filter
+    const matchesDepartment = !filters.department || 
+                            exam.departmentName === filters.department;
+
+    // Date filter (existing)
     let matchesDate = true;
     if (filters.startDate) {
         const startDate = new Date(filters.startDate);
@@ -79,7 +102,7 @@ const filteredExams = exams.filter(exam => {
         matchesDate = matchesDate && examDate <= endDate;
     }
 
-    // Filtre heure
+    // Time filter (existing)
     let matchesTime = true;
     if (filters.startTime) {
         const [startHours, startMinutes] = filters.startTime.split(':');
@@ -94,7 +117,7 @@ const filteredExams = exams.filter(exam => {
         matchesTime = matchesTime && examEnd <= endTime;
     }
 
-    return matchesSearch && matchesDate && matchesTime;
+    return matchesSearch && matchesDepartment && matchesDate && matchesTime;
 });
 
     if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
@@ -114,7 +137,17 @@ const filteredExams = exams.filter(exam => {
                             value={filters.search}
                             onChange={handleFilterChange}
                         />
-                        
+                         <select
+        name="department"
+        className="department-filter"
+        value={filters.department}
+        onChange={handleFilterChange}
+    >
+        <option value="">All Departments</option>
+        {[...new Set(exams.map(exam => exam.departmentName))].map(dept => (
+            <option key={dept} value={dept}>{dept}</option>
+        ))}
+    </select>
                         <div className="time-filters">
                             <div className="filter-group">
                                 <label>Start Date:</label>
@@ -187,6 +220,19 @@ const filteredExams = exams.filter(exam => {
                                 >
                                     Delete
                                 </button>
+                                <button 
+                                className="add-supervisor-btn"
+                                onClick={() => handleAddSupervisor(exam)}
+                            >
+                                Add Supervisor
+                            </button>
+                            <button 
+    className="add-room-btn"
+    onClick={() => handleAddRoom(exam)}
+>
+    Add Room
+</button>
+                                
                             </div>
                         </div>
                     ))}

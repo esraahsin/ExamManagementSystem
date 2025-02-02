@@ -14,24 +14,22 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "exam_rooms")
-
-
 public class ExamRoom implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int examRoomId;
-    
+
     @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
-    
+
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
-    
+
     @Column(nullable = false)
     private Date createdAt;
-    //
 
     public int getExamRoomId() {
         return examRoomId;
@@ -45,6 +43,7 @@ public class ExamRoom implements Serializable {
         return exam;
     }
 
+    // Correction: Mettre l'objet complet 'Exam' au lieu de l'ID
     public void setExam(Exam exam) {
         this.exam = exam;
     }
