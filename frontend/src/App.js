@@ -14,11 +14,15 @@ function App() {
     <Route path="/exams" element={<ExamsPage />} />
     <Route path="/admin/exams" element={<ExamsPage />} />
     <Route path="/admin/exams/addexam" element={<AddExam />} />
+<<<<<<< HEAD
     <Route path="/admin/exams/updateexam" element={<UpdateExam/>}/>
     <Route path='/admin/dashboard' element={<Dashboard/>}/>
     <Route path='/admin/calendar' element={<CalendarView/>}/>
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+=======
+    
+>>>>>>> 9f7c3a92 (UpdateExam.jsx)
 
     </Routes>
     </BrowserRouter>
