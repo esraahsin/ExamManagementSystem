@@ -76,7 +76,7 @@ const ExamsPage = () => {
 };
 const handleAddSupervisor = (exam) => {
     // Naviguer vers la page d'ajout de surveillant avec l'examen sélectionné
-    navigate(`/admin/exams/AddSupervisorPage`, { state: { exam } });
+    navigate(`/admin/exams/AvailableInvigilators`, { state: { exam } });
 };
 const filteredExams = exams.filter(exam => {
     const examDate = new Date(exam.examDate);

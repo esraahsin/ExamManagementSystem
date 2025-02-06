@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,19 +75,20 @@ public class ExamAdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExamDTO> updateExam(@PathVariable Integer id, @RequestBody ExamDTO examDTO) {
-        try {
-            ExamDTO updatedExam = examService.updateExam(id, examDTO);
-            if (updatedExam != null) {
-                return ResponseEntity.ok(updatedExam); // 200 OK
-            } else {
-                return ResponseEntity.notFound().build(); // 404 Not Found
-            }
-        } catch (Exception e) {
-            System.err.println("Error in updateExam: " + e.getMessage());
-            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
+public ResponseEntity<ExamDTO> updateExam(@PathVariable Integer id, @RequestBody ExamDTO examDTO) {
+    try {
+        ExamDTO updatedExam = examService.updateExam(id, examDTO);
+        if (updatedExam != null) {
+            return ResponseEntity.ok(updatedExam); // 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
         }
+    } catch (Exception e) {
+        System.err.println("Error in updateExam: " + e.getMessage());
+        return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
     }
+}
+
 
     @GetMapping("/available-rooms")
     public ResponseEntity<List<Room>> getAvailableRooms() {
