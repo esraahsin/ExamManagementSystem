@@ -13,7 +13,7 @@ const SignupPage = () => {
     confirmPassword: '',
     role: 'etudiant',
     departmentId: '', // Changed from specialty to departmentId
-    specialty: '', // Added specialty field
+    speciality: '', // Added specialty field
     userId: '' // Added user_id field
   });
   const [error, setError] = useState('');
@@ -62,8 +62,8 @@ const SignupPage = () => {
         setError('Department is required for students');
         return;
       }
-      if (!userData.specialty.trim()) {
-        setError('Specialty is required for students');
+      if (!userData.speciality.trim()) {
+        setError('Specialtiy is required for students');
         return;
       }
     }
@@ -78,8 +78,8 @@ const SignupPage = () => {
         password: userData.password,
         role: userData.role.toUpperCase(), // Ensure uppercase to match backend enum
         departmentId: userData.role === 'etudiant' ? parseInt(userData.departmentId) : null,
-        specialty: userData.role === 'etudiant' ? userData.specialty.trim() : null, // Include specialty for students
-        userId: userData.userIdd // Include user_id in the payload
+        speciality: userData.role === 'etudiant' ? userData.speciality.trim() : null, // Include specialty for students
+        userIdd: userData.userId 
       };
 
       await axios.post('http://localhost:8080/api/auth/signup', payload);
@@ -184,7 +184,7 @@ const SignupPage = () => {
               <input
                 className="auth-input"
                 type="text"
-                name="specialty"
+                name="speciality"
                 placeholder="e.g., CPI2, ING INFO1..."
                 value={userData.specialty}
                 onChange={handleChange}

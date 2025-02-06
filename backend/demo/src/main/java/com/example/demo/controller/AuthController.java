@@ -44,10 +44,10 @@ public class AuthController {
             User user = new User();
             user.setName(request.getName());
             user.setEmail(request.getEmail());
-            user.setPassword(request.getPassword()); // Use BCrypt for password hashing in production
+            user.setPassword(request.getPassword()); 
             user.setRole(role);
             user.setActive(true);
-            user.setSpeciality(request.getSpecialty());
+            user.setSpeciality(request.getSpeciality());
             user.setUserId(request.getUserIdd());
 
             userRepository.save(user);

@@ -39,9 +39,11 @@ public class User implements Serializable {
     private Department department;
     
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     
     private boolean isActive;
@@ -135,4 +137,14 @@ public class User implements Serializable {
 	public void setRoleString(String roleString) {
         this.role = UserRole.valueOf(roleString); 
     }
+    @PrePersist
+protected void onCreate() {
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+}
+
+@PreUpdate
+protected void onUpdate() {
+    this.updatedAt = new Date();
+}
 }
