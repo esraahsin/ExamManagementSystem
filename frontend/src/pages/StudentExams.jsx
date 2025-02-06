@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';  // Import calendar styles
+import { jsPDF } from 'jspdf';  // Import jsPDF
 
 const StudentExams = () => {
   const [exams, setExams] = useState([]);
@@ -49,6 +50,32 @@ const StudentExams = () => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB');
+  };
+
+  // Function to generate PDF
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const today = new Date().toLocaleDateString();
+
+    doc.setFontSize(18);
+    doc.text('Exam Schedule', 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Date: ${today}`, 20, 30);
+
+    // Sort exams by date
+    const sortedExams = [...exams].sort((a, b) => new Date(a.examDate) - new Date(b.examDate));
+
+    let yOffset = 40; // Start y-position for table
+    sortedExams.forEach((exam, index) => {
+      doc.text(`${index + 1}. ${exam.subject}`, 20, yOffset);
+      doc.text(`Date: ${formatDate(exam.examDate)}`, 100, yOffset);
+      doc.text(`Start: ${formatTime(exam.startTime)}`, 150, yOffset);
+      doc.text(`End: ${formatTime(exam.endTime)}`, 180, yOffset);
+      yOffset += 10;
+    });
+
+    // Save the PDF
+    doc.save('exam_schedule.pdf');
   };
 
   return (
@@ -139,6 +166,10 @@ const StudentExams = () => {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="text-center mt-4">
+            <button className="btn btn-success" onClick={generatePDF}>Generate PDF</button>
           </div>
         </div>
 
