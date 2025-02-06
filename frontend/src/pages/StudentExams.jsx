@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';  // Import calendar styles
-import { jsPDF } from 'jspdf';  // Import jsPDF
+import 'react-calendar/dist/Calendar.css';  
+import { jsPDF } from 'jspdf'; 
 
 const StudentExams = () => {
   const [exams, setExams] = useState([]);
   const [error, setError] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date()); // To track selected date on the calendar
-  const [filteredExams, setFilteredExams] = useState([]); // Exams filtered by selected date
-  const [upcomingExams, setUpcomingExams] = useState([]); // Exams that are upcoming
+  const [selectedDate, setSelectedDate] = useState(new Date()); 
+  const [filteredExams, setFilteredExams] = useState([]); 
+  const [upcomingExams, setUpcomingExams] = useState([]); 
 
   useEffect(() => {
     const fetchExams = async () => {
@@ -27,32 +27,27 @@ const StudentExams = () => {
   }, []);
 
   useEffect(() => {
-    // Filter exams based on selected date
     const formattedDate = selectedDate.toLocaleDateString('en-GB');
     const filtered = exams.filter(exam => formatDate(exam.examDate) === formattedDate);
     setFilteredExams(filtered);
 
-    // Filter upcoming exams (after today's date)
     const today = new Date();
     const upcoming = exams.filter(exam => new Date(exam.examDate) > today);
     setUpcomingExams(upcoming);
   }, [selectedDate, exams]);
 
-  // Format time to HH:MM format
   const formatTime = (timeString) => {
     if (!timeString) return '';
     const time = timeString.split(':');
     return `${time[0]}:${time[1]}`;
   };
 
-  // Format date to DD/MM/YYYY
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB');
   };
 
-  // Function to generate PDF
   const generatePDF = () => {
     const doc = new jsPDF();
     const today = new Date().toLocaleDateString();
@@ -62,10 +57,9 @@ const StudentExams = () => {
     doc.setFontSize(12);
     doc.text(`Date: ${today}`, 20, 30);
 
-    // Sort exams by date
     const sortedExams = [...exams].sort((a, b) => new Date(a.examDate) - new Date(b.examDate));
 
-    let yOffset = 40; // Start y-position for table
+    let yOffset = 40; 
     sortedExams.forEach((exam, index) => {
       doc.text(`${index + 1}. ${exam.subject}`, 20, yOffset);
       doc.text(`Date: ${formatDate(exam.examDate)}`, 100, yOffset);
@@ -73,8 +67,6 @@ const StudentExams = () => {
       doc.text(`End: ${formatTime(exam.endTime)}`, 180, yOffset);
       yOffset += 10;
     });
-
-    // Save the PDF
     doc.save('exam_schedule.pdf');
   };
 
@@ -100,7 +92,6 @@ const StudentExams = () => {
               />
             </div>
             <div className="col-md-8">
-              {/* Display exams for selected date */}
               <h4>Exams on {formatDate(selectedDate)}</h4>
               {filteredExams.length === 0 ? (
                 <div className="text-center py-4">
@@ -133,7 +124,6 @@ const StudentExams = () => {
                 </div>
               )}
 
-              {/* Display upcoming exams */}
               <h4 className="mt-5">Upcoming Exams</h4>
               {upcomingExams.length === 0 ? (
                 <div className="text-center py-4">
