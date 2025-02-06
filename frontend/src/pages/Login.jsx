@@ -22,8 +22,13 @@ const LoginPage = () => {
         password
       });
       
-      localStorage.setItem('token', response.data.token);
-      navigate('/exams');
+      localStorage.setItem('email', email);
+      if (response.data.role === 'ETUDIANT') {
+        navigate('/student/exam');
+      } 
+      else {
+        navigate('/exams');
+        }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

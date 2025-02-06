@@ -46,16 +46,13 @@ public class Exam implements Serializable {
     
     private boolean isDuplicate = false;
     
-    @Column(length = 50) // Ajout de la spécialité
-    private String speciality; // Nouvel attribut
+    @Column(length = 50) 
+    private String speciality; 
     
-    @OneToMany(mappedBy = "exam")
     private List<ExamRoom> examRooms;
     
-    @OneToMany(mappedBy = "exam")
     private List<Invigilator> invigilators;
     
-    @OneToMany(mappedBy = "exam")
     private List<ExamStudent> examStudents;
     
     // Constructeur

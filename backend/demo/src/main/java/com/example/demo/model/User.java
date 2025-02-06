@@ -46,7 +46,7 @@ public class User implements Serializable {
     
     private boolean isActive;
     @Column(length = 100) // Add specialty field
-    private String specialty;
+    private String speciality;
     public User() {
     }
     public User(String name2, String email2, String password2, String role2, String specialty) {
@@ -125,12 +125,12 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
    
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String specialty) {
+        this.speciality = specialty;
     }
 	public void setRoleString(String roleString) {
         this.role = UserRole.valueOf(roleString); 

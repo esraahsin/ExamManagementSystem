@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import CalendarView from "./pages/CalendarView"
 import Login from './pages/Login';
 import Signup from './pages/Signup'
+import StudentExams from './pages/StudentExams';
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function App() {
     <Route path='/admin/calendar' element={<CalendarView/>}/>
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+    <Route path="/student/exam" element={<StudentExams />} />
 
     </Routes>
     </BrowserRouter>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -46,7 +47,7 @@ public class AuthController {
             user.setPassword(request.getPassword()); // Use BCrypt for password hashing in production
             user.setRole(role);
             user.setActive(true);
-            user.setSpecialty(request.getSpecialty());
+            user.setSpeciality(request.getSpecialty());
             user.setUserId(request.getUserIdd());
 
             userRepository.save(user);
@@ -76,8 +77,10 @@ public class AuthController {
             }
 
             // Successful login response (consider returning a JWT token for authentication)
-            return ResponseEntity.ok("Login successful");
-
+            return ResponseEntity.ok(Map.of(
+                "email", user.getEmail(),
+                "role", user.getRole() // Make sure role is returned
+            ));
         } catch (Exception e) {
             logger.error("Login error: {}", e.getMessage(), e);
             return ResponseEntity.internalServerError().body("Login failed: " + e.getMessage());
