@@ -15,13 +15,13 @@ public class SignupRequest {
     private String password;
     private UserRole role;
     private Integer departmentId;  // Add this field
-    private String specialty;
-    public void setSpecialty(String speciality) {
-        this.specialty = speciality;
+    private String specialtiy;
+    public void setSpeciality(String speciality) {
+        this.specialtiy = speciality;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return specialtiy;
     }
 
     // Add getter and setter for departmentId

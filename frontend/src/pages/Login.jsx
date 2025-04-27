@@ -23,6 +23,7 @@ const LoginPage = () => {
         email,
         password,
       });
+<<<<<<< HEAD
 
       console.log('Auth Response:', authResponse.data); // Log de la réponse de l'API
 
@@ -108,6 +109,16 @@ const LoginPage = () => {
           setError('Rôle non reconnu');
           break;
       }
+=======
+      
+      localStorage.setItem('email', email);
+      if (response.data.role === 'ETUDIANT') {
+        navigate('/student/exam');
+      } 
+      else {
+        navigate('/exams');
+        }
+>>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
     } catch (err) {
       console.error('Error:', err); // Log de l'erreur
       setError(err.response?.data?.message || 'Une erreur s\'est produite lors de la connexion.');

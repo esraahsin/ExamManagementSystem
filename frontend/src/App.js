@@ -13,9 +13,13 @@ import Dashboard from './pages/Dashboard';
 import CalendarView from "./pages/CalendarView"
 import Login from './pages/Login';
 import Signup from './pages/Signup'
+<<<<<<< HEAD
 
 import TeacherSchedule from './pages/TeacherSchedule';
 
+=======
+import StudentExams from './pages/StudentExams';
+>>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
 function App() {
   
   return (
@@ -36,9 +40,13 @@ function App() {
     <Route path='/admin/calendar' element={<CalendarView/>}/>
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+<<<<<<< HEAD
     
 
     
+=======
+    <Route path="/student/exam" element={<StudentExams />} />
+>>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
 
     </Routes>
     </BrowserRouter>
