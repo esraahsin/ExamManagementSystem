@@ -53,15 +53,14 @@ public class User implements Serializable {
     
     private boolean isActive;
     @Column(length = 100) // Add specialty field
-<<<<<<< HEAD
+
     private String specialty;
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<TeachingAssignment> assignments;
 
-=======
     private String speciality;
->>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
+
     public User() {
     }
     public User(String name, String email, String password, UserRole role, String specialty) {

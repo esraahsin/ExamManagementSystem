@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
+
 import java.util.HashMap;
-=======
->>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
+
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -79,7 +79,7 @@ public class AuthController {
             if (!user.getPassword().equals(request.getPassword())) {
                 return ResponseEntity.badRequest().body(Map.of("message", "Invalid email or password"));
             }
-<<<<<<< HEAD
+
     
             // Simuler la génération d'un token (⚠️ Remplace avec un vrai JWT en prod)
             String token = "fake-jwt-token-" + user.getUserId();
@@ -94,16 +94,14 @@ public class AuthController {
                 )
             );
     
-            return ResponseEntity.ok(response);
-    
-=======
+        
 
             // Successful login response (consider returning a JWT token for authentication)
             return ResponseEntity.ok(Map.of(
                 "email", user.getEmail(),
                 "role", user.getRole() // Make sure role is returned
             ));
->>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
+
         } catch (Exception e) {
             logger.error("Login error: {}", e.getMessage(), e);
             return ResponseEntity.internalServerError().body(Map.of("message", "Login failed: " + e.getMessage()));

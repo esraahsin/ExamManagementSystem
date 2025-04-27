@@ -13,11 +13,11 @@
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
-<<<<<<< HEAD
+
     "date-fns": "^4.1.0",
-=======
+
     "jspdf": "^2.5.2",
->>>>>>> 2f9424f3f915851b00eebf33b4144ce31d5b26ba
+
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
