@@ -24,6 +24,10 @@ const UpdateExam = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+
+   
+
+    // Charger les données de l'examen à me5ttre à jour
     useEffect(() => {
         if (selectedDepartment) {
             const subjects = subjectsByDepartment[selectedDepartment];

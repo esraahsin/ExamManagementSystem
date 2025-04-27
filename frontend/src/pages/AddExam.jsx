@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import "./AddExam.css"; // Importez le fichier CSS
+import { Link } from "react-router-dom"; // Ajoutez cette ligne
 
 export default function AddExam() {
   const [exam, setExam] = useState({
@@ -11,6 +13,7 @@ export default function AddExam() {
     endTime: "",
     difficulty: "",
     coefficient: "",
+    speciality: "" // Nouveau champ
   });
 
   const handleChange = (e) => {
@@ -27,7 +30,17 @@ export default function AddExam() {
     try {
       await axios.post("http://localhost:8080/api/admin/exams", exam);
       alert("Exam added successfully!");
-      setExam({ examId: "", subject: "", department: "", examDate: "", startTime: "", endTime: "", difficulty: "", coefficient: "" });
+      setExam({ 
+        examId: "", 
+        subject: "", 
+        department: "", 
+        examDate: "", 
+        startTime: "", 
+        endTime: "", 
+        difficulty: "", 
+        coefficient: "",
+        speciality: "" // Réinitialiser le champ
+      });
     } catch (error) {
       console.error("Error adding exam", error);
       alert("Failed to add exam");
@@ -35,29 +48,105 @@ export default function AddExam() {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Add New Exam</h2>
+    <div className="add-exam-container">
+      <h2 className="add-exam-title">Add New Exam</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Change input type to "number" for examId */}
+        {/* Exam ID */}
         <input 
           type="number" 
           name="examId" 
           value={exam.examId} 
           onChange={handleChange} 
           placeholder="Exam ID" 
-          className="w-full p-2 border rounded" 
+          className="add-exam-input" 
           min="1" 
           required 
         />
-        {/* Keep other fields unchanged */}
-        <input type="text" name="subject" value={exam.subject} onChange={handleChange} placeholder="Subject" className="w-full p-2 border rounded" required />
-        <input type="text" name="department" value={exam.department} onChange={handleChange} placeholder="Department" className="w-full p-2 border rounded" required />
-        <input type="date" name="examDate" value={exam.examDate} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="time" name="startTime" value={exam.startTime} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="time" name="endTime" value={exam.endTime} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="number" name="difficulty" value={exam.difficulty} onChange={handleChange} placeholder="Difficulty" className="w-full p-2 border rounded" required />
-        <input type="number" name="coefficient" value={exam.coefficient} onChange={handleChange} placeholder="Coefficient" className="w-full p-2 border rounded" required />
-        <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">Add Exam</button>
+        {/* Subject */}
+        <input 
+          type="text" 
+          name="subject" 
+          value={exam.subject} 
+          onChange={handleChange} 
+          placeholder="Subject" 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Department */}
+        <input 
+          type="text" 
+          name="department" 
+          value={exam.department} 
+          onChange={handleChange} 
+          placeholder="Department" 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Exam Date */}
+        <input 
+          type="date" 
+          name="examDate" 
+          value={exam.examDate} 
+          onChange={handleChange} 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Start Time */}
+        <input 
+          type="time" 
+          name="startTime" 
+          value={exam.startTime} 
+          onChange={handleChange} 
+          className="add-exam-input" 
+          required 
+        />
+        {/* End Time */}
+        <input 
+          type="time" 
+          name="endTime" 
+          value={exam.endTime} 
+          onChange={handleChange} 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Difficulty */}
+        <input 
+          type="number" 
+          name="difficulty" 
+          value={exam.difficulty} 
+          onChange={handleChange} 
+          placeholder="Difficulty" 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Coefficient */}
+        <input 
+          type="number" 
+          name="coefficient" 
+          value={exam.coefficient} 
+          onChange={handleChange} 
+          placeholder="Coefficient" 
+          className="add-exam-input" 
+          required 
+        />
+        {/* Speciality */}
+        <input 
+          type="text" 
+          name="speciality" 
+          value={exam.speciality} 
+          onChange={handleChange} 
+          placeholder="Speciality (e.g., Computer Science, TIC)" 
+          className="add-exam-input" 
+          required 
+        />
+        <div className="button-group">
+          <button type="submit" className="add-exam-button">
+            Add Exam
+          </button>
+          <Link to="/admin/exams" className="cancel-button">
+            Cancel
+          </Link>
+          </div>
       </form>
     </div>
   );

@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
+
 import com.example.demo.model.Invigilator;
+import com.example.demo.model.User;
 
 @Repository
 public interface InvigilatorRepository extends JpaRepository<Invigilator, Integer> {
@@ -23,4 +26,10 @@ public interface InvigilatorRepository extends JpaRepository<Invigilator, Intege
                               @Param("examDate") Date examDate,
                               @Param("startTime") Time startTime,
                               @Param("endTime") Time endTime);
+    
+    @Query("SELECT i FROM Invigilator i WHERE i.user.userId = :userId")
+    List<Invigilator> findByUserId(@Param("userId") int userId);
+
+    // Change findByTeacher to findByUser
+    List<Invigilator> findByUser(User user);
 }

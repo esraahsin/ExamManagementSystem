@@ -24,6 +24,7 @@ public class SecurityConfig {
             .anyRequest().permitAll();
         return http.build();
     }
+    
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

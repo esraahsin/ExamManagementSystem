@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 // ExamStudent Entity
@@ -17,10 +19,12 @@ public class ExamStudent implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "exam_id", nullable = false)
+    @JsonBackReference
     private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @Enumerated(EnumType.STRING)

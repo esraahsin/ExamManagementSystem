@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ExamDTO;
@@ -23,6 +24,7 @@ import com.example.demo.repository.ExamRepository;
 import com.example.demo.service.ExamService;
 import com.example.demo.service.RoomService;
 import com.example.demo.service.ExamRoomService;
+import com.example.demo.repository.ExamRepository;
 
 @RestController
 @RequestMapping("/api/admin/exams")
@@ -34,6 +36,8 @@ public class ExamAdminController {
 
     @Autowired
     private RoomService roomService;
+    @Autowired 
+    private ExamRepository examRepository;
 
    
 
@@ -102,4 +106,12 @@ public ResponseEntity<ExamDTO> updateExam(@PathVariable Integer id, @RequestBody
         List<Room> rooms = roomService.getAllRooms();
         return ResponseEntity.ok(rooms);
     }
+    @GetMapping("/by-invigilator")
+    public List<Exam> getExamsByInvigilator(@RequestParam int invigilator_id) {
+        return examRepository.findExamsByInvigilatorId(invigilator_id);
+    }
+    
+    
 }
+    
+

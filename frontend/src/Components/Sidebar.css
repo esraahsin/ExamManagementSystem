@@ -1,0 +1,74 @@
+/* Sidebar Container */
+.sidebar {
+    background-color: #1f2937; /* bg-gray-800 */
+    color: white;
+    height: 100vh;
+    width: 16rem; /* w-64 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar.closed {
+    transform: translateX(-16rem); /* -translate-x-64 */
+}
+
+/* Logo / Nom du Système */
+.sidebar-header {
+    padding: 1rem; /* p-4 */
+    text-align: center;
+    border-bottom: 1px solid #374151; /* border-gray-700 */
+}
+
+.sidebar-header h1 {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: bold;
+}
+
+/* Menu Items */
+.sidebar-nav {
+    margin-top: 1rem; /* mt-4 */
+}
+
+.sidebar-nav a,
+.sidebar-nav button {
+    display: block;
+    padding: 0.75rem; /* p-3 */
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav button:hover {
+    background-color: #374151; /* hover:bg-gray-700 */
+}
+
+.sidebar-nav .submenu {
+    margin-left: 1rem; /* ml-4 */
+    margin-top: 0.5rem; /* mt-2 */
+}
+
+.sidebar-nav .submenu a {
+    padding: 0.5rem; /* p-2 */
+}
+
+.sidebar-nav .submenu a:hover {
+    background-color: #4b5563; /* hover:bg-gray-600 */
+}
+
+/* Toggle Button */
+.toggle-button {
+    position: absolute;
+    top: 1rem; /* top-4 */
+    right: -2rem; /* -right-8 */
+    background-color: #1f2937; /* bg-gray-800 */
+    padding: 0.5rem; /* p-2 */
+    border-radius: 0 0.5rem 0.5rem 0; /* rounded-r-lg */
+    color: white;
+    cursor: pointer;
+}

@@ -7,13 +7,21 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+    
     
     @Column(nullable = false, length = 100)
     private String name;
@@ -29,6 +37,10 @@ public class User implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnore // Add this annotation
+    @JsonBackReference
+
+
     private Department department;
     
     @Column(nullable = false)
@@ -38,7 +50,25 @@ public class User implements Serializable {
     private Date updatedAt;
     
     private boolean isActive;
-    //
+    @Column(length = 100) // Add specialty field
+    private String specialty;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<TeachingAssignment> assignments;
+
+    public User() {
+    }
+    public User(String name, String email, String password, UserRole role, String specialty) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.specialty = specialty;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+        this.isActive = true; // Par défaut, actif
+    }
+    
 
     public int getUserId() {
         return userId;
@@ -110,5 +140,16 @@ public class User implements Serializable {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+   
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+	public void setRoleString(String roleString) {
+        this.role = UserRole.valueOf(roleString); 
     }
 }

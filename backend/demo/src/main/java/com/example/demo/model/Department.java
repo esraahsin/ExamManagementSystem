@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,19 +21,20 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "departments")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "departmentId")
 
 public class Department implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @JsonIgnoreProperties("department")
+    @JsonIgnoreProperties("department")
 
     private int departmentId;
     
     @Column(nullable = false, length = 100)
     private String name;
-    
+     
     @OneToOne
     @JoinColumn(name = "head_id")
+    @JsonManagedReference // Add this annotation
     private User head;
     
     @Column(nullable = false)

@@ -3,6 +3,8 @@ package com.example.demo.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,14 +24,17 @@ public class Invigilator implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
     
     @ManyToOne
     @JoinColumn(name = "exam_id")
+    @JsonBackReference
     private Exam exam;
     
     @ManyToOne
     @JoinColumn(name = "room_id")
+    @JsonBackReference
     private Room room;
     
     @Column(nullable = false)
