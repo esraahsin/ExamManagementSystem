@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./ExamPage.css";
+
+import { useNavigate } from 'react-router-dom';
+import "./ExamPage.css"
+
 import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf'; // Import jsPDF
+
 
 const ExamsPage = () => {
     const [exams, setExams] = useState([]);
@@ -16,6 +20,27 @@ const ExamsPage = () => {
         endTime: '',
         department: '' // Add department filter
     });
+    const navigate = useNavigate(); // Add this line
+    const fetchAvailableRooms = async (exam) => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/rooms/available', {
+                params: {
+                    examDate: exam.examDate,
+                    startTime: exam.startTime,
+                    endTime: exam.endTime,
+                    minCapacity: exam.numberOfStudents // Supposons que numberOfStudents est une propriété de l'examen
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching available rooms:', error);
+            return [];
+        }
+    };
+    const handleAddRoom = async (exam) => {
+        const availableRooms = await fetchAvailableRooms(exam);
+        navigate(`/admin/exams/AddRoomPage`, { state: { exam, availableRooms } });
+    };
 
     useEffect(() => {
         fetchExams();
@@ -132,6 +157,7 @@ const ExamsPage = () => {
         }
     };
     const handleDelete = async (examId) => {
+
        if (window.confirm('Are you sure you want to delete this exam?')) {
             try {
                 await axios.delete(`http://localhost:8080/api/admin/exams/${examId}`);
@@ -143,16 +169,19 @@ const ExamsPage = () => {
         
     };}
 
+
     const handleUpdate = (exam) => {
-        // For full update functionality, you'd typically open a modal or navigate to an edit page
-      /*  setEditingExam(exam);
-        alert(`Edit exam with ID: ${exam.examId}\nImplement edit functionality here`);
-  */  };
+        navigate(`/admin/exams/updateexam`, { state: { exam } });
+    };
   const handleFilterChange = (e) => {
     setFilters({
         ...filters,
         [e.target.name]: e.target.value
     });
+};
+const handleAddSupervisor = (exam) => {
+    // Naviguer vers la page d'ajout de surveillant avec l'examen sélectionné
+    navigate(`/admin/exams/AvailableInvigilators`, { state: { exam } });
 };
 const filteredExams = exams.filter(exam => {
     const examDate = new Date(exam.examDate);
@@ -314,6 +343,19 @@ const filteredExams = exams.filter(exam => {
                                 >
                                     Delete
                                 </button>
+                                <button 
+                                className="add-supervisor-btn"
+                                onClick={() => handleAddSupervisor(exam)}
+                            >
+                                Add Supervisor
+                            </button>
+                            <button 
+    className="add-room-btn"
+    onClick={() => handleAddRoom(exam)}
+>
+    Add Room
+</button>
+                                
                             </div>
                         </div>
                     ))}

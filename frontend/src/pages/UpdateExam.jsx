@@ -1,90 +1,99 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import './UpdateExam.css';
+
+// Liste des matières filtrées par département
+const subjectsByDepartment = {
+    Informatique: ['Programmation Java', 'Algorithmique', 'Bases de données', 'Systèmes d’exploitation'],
+    Mathématiques: ['Analyse', 'Géométrie', 'Probabilités', 'Algèbre'],
+    'Génie Logiciel': ['Développement web', 'Architecture logicielle', 'Tests logiciels'],
+    'Data Science et Analyse de Données': ['Apprentissage automatique', 'Statistiques', 'Analyse de données'],
+    'Réseaux et Télécommunications': ['Réseaux informatiques', 'Systèmes de communication', 'Sécurité des réseaux'],
+};
 
 const UpdateExam = () => {
-    const { id } = useParams(); // Récupérer l'ID de l'examen depuis l'URL
+    const location = useLocation();
     const navigate = useNavigate();
+    const [exam] = useState(location.state?.exam || {});
+    const [departments] = useState(Object.keys(subjectsByDepartment));
+    const [selectedDepartment, setSelectedDepartment] = useState(exam.departmentName || '');
+    const [selectedSubject, setSelectedSubject] = useState(exam.subject || '');
+    const [coefficient, setCoefficient] = useState(exam.coefficient || 1);
+    const [difficulty, setDifficulty] = useState(exam.difficulty || 1);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-    // État pour stocker les données de l'examen
-    const [exam, setExam] = useState({
-        subject: "",
-        department_id: "",
-        exam_date: "",
-        start_time: "",
-        end_time: "",
-        difficulty: 1,
-        coefficient: 1,
-        is_duplicate: false,
-    });
 
-    // Options pour les listes déroulantes
-    const subjects = ["Mathématiques", "Informatique", "Physique", "Chimie"]; // Exemple de matières
-    const departments = ["Informatique", "Mathematics", "Biologie"]; // Exemple de départements
-    const difficulties = [1, 2, 3, 4, 5]; // Difficulté de 1 à 5
-    const coefficients = [1, 2, 3, 4, 5]; // Coefficients possibles
+   
 
-    // Charger les données de l'examen à mettre à jour
+    // Charger les données de l'examen à me5ttre à jour
     useEffect(() => {
-        const fetchExam = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/admin/exams/${id}`);
-                const examData = response.data;
-                setExam({
-                    subject: examData.subject,
-                    department_id: examData.department_id,
-                    exam_date: examData.exam_date,
-                    start_time: examData.start_time,
-                    end_time: examData.end_time,
-                    difficulty: examData.difficulty,
-                    coefficient: examData.coefficient,
-                    is_duplicate: examData.is_duplicate,
-                });
-            } catch (error) {
-                console.error("Erreur lors de la récupération de l'examen :", error);
+        if (selectedDepartment) {
+            const subjects = subjectsByDepartment[selectedDepartment];
+            if (!subjects.includes(selectedSubject)) {
+                setSelectedSubject(subjects[0]);
             }
-        };
+        }
+    }, [selectedDepartment, selectedSubject]);
 
-        fetchExam();
-    }, [id]);
+    const handleUpdate = async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page lors de la soumission du formulaire
 
-    // Gérer les changements dans les champs du formulaire
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setExam({
-            ...exam,
-            [name]: type === "checkbox" ? checked : value,
-        });
-    };
+        if (!selectedDepartment || !selectedSubject) {
+            setError('Veuillez sélectionner un département et une matière.');
+            return;
+        }
 
-    // Soumettre le formulaire de mise à jour
-    const handleSubmit = async (e) => {
-        e.preventDefault();
         try {
-            await axios.put(`http://localhost:8080/api/admin/exams/${id}`, exam);
-            alert("Examen mis à jour avec succès !");
-            navigate("/exams"); // Rediriger vers la liste des examens
+            const updatedExam = {
+                ...exam,
+                departmentName: selectedDepartment,
+                subject: selectedSubject,
+                coefficient,
+                difficulty,
+            };
+            await axios.put(`http://localhost:8080/api/admin/exams/${exam.examId}`, updatedExam);
+            setSuccess('Examen mis à jour avec succès !');
+            setTimeout(() => {
+                navigate('/admin/exams');
+            }, 2000); // Redirige après 2 secondes
         } catch (error) {
-            console.error("Erreur lors de la mise à jour de l'examen :", error);
-            alert("Une erreur s'est produite lors de la mise à jour de l'examen.");
+            console.error('Error updating exam:', error);
+            setError('Erreur lors de la mise à jour de l\'examen');
         }
     };
 
     return (
-        <div className="container">
-            <h2>Modifier l'examen</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="update-exam-container">
+            <h1>Modifier l'examen</h1>
+            {error && <div className="error-message">{error}</div>}
+            {success && <div className="success-message">{success}</div>}
+            <form className="update-exam-form" onSubmit={handleUpdate}>
+                <div className="form-group">
+                    <label>Département :</label>
+                    <select
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
+                    >
+                        <option value="">Sélectionner un département</option>
+                        {departments.map((dept) => (
+                            <option key={dept} value={dept}>
+                                {dept}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className="form-group">
                     <label>Matière :</label>
                     <select
-                        name="subject"
-                        value={exam.subject}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
+                        value={selectedSubject}
+                        onChange={(e) => setSelectedSubject(e.target.value)}
+                        disabled={!selectedDepartment}
                     >
-                        {subjects.map((subject, index) => (
-                            <option key={index} value={subject}>
+                        {selectedDepartment && subjectsByDepartment[selectedDepartment].map((subject) => (
+                            <option key={subject} value={subject}>
                                 {subject}
                             </option>
                         ))}
@@ -92,107 +101,34 @@ const UpdateExam = () => {
                 </div>
 
                 <div className="form-group">
-                    <label>Département :</label>
-                    <select
-                        name="department_id"
-                        value={exam.department_id}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    >
-                        {departments.map((department, index) => (
-                            <option key={index} value={department}>
-                                {department}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+    <label>Coefficient :</label>
+    <div className="input-with-arrows">
+        <span className="arrow" onClick={() => setCoefficient(coefficient > 1 ? coefficient - 1 : coefficient)}>
+            &#9664; {/* Flèche gauche */}
+        </span>
+        <span>{coefficient}</span>
+        <span className="arrow" onClick={() => setCoefficient(coefficient + 1)}>
+            &#9654; {/* Flèche droite */}
+        </span>
+    </div>
+</div>
+
+<div className="form-group">
+    <label>Difficulté :</label>
+    <div className="input-with-arrows">
+        <span className="arrow" onClick={() => setDifficulty(difficulty > 1 ? difficulty - 1 : difficulty)}>
+            &#9664; {/* Flèche gauche */}
+        </span>
+        <span>{difficulty}</span>
+        <span className="arrow" onClick={() => setDifficulty(difficulty + 1)}>
+            &#9654; {/* Flèche droite */}
+        </span>
+    </div>
+</div>
 
                 <div className="form-group">
-                    <label>Date de l'examen :</label>
-                    <input
-                        type="date"
-                        name="exam_date"
-                        value={exam.exam_date}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
+                    <button type="submit">Mettre à jour</button>
                 </div>
-
-                <div className="form-group">
-                    <label>Heure de début :</label>
-                    <input
-                        type="time"
-                        name="start_time"
-                        value={exam.start_time}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Heure de fin :</label>
-                    <input
-                        type="time"
-                        name="end_time"
-                        value={exam.end_time}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Difficulté :</label>
-                    <select
-                        name="difficulty"
-                        value={exam.difficulty}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    >
-                        {difficulties.map((difficulty, index) => (
-                            <option key={index} value={difficulty}>
-                                {difficulty}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="form-group">
-                    <label>Coefficient :</label>
-                    <select
-                        name="coefficient"
-                        value={exam.coefficient}
-                        onChange={handleChange}
-                        className="form-control"
-                        required
-                    >
-                        {coefficients.map((coefficient, index) => (
-                            <option key={index} value={coefficient}>
-                                {coefficient}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="form-group">
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="is_duplicate"
-                            checked={exam.is_duplicate}
-                            onChange={handleChange}
-                        />
-                        Est une copie ?
-                    </label>
-                </div>
-
-                <button type="submit" className="btn btn-primary">
-                    Mettre à jour
-                </button>
             </form>
         </div>
     );

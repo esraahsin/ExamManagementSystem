@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.HashMap;
+
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,26 +68,43 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
             Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
-
+    
             if (userOptional.isEmpty()) {
-                return ResponseEntity.badRequest().body("Invalid email or password");
+                return ResponseEntity.badRequest().body(Map.of("message", "Invalid email or password"));
             }
-
+    
             User user = userOptional.get();
-
-            // Validate password (in production, use hashed password comparison)
+    
+            // Vérifier le mot de passe (⚠️ en production, utiliser un mot de passe hashé)
             if (!user.getPassword().equals(request.getPassword())) {
-                return ResponseEntity.badRequest().body("Invalid email or password");
+                return ResponseEntity.badRequest().body(Map.of("message", "Invalid email or password"));
             }
+
+    
+            // Simuler la génération d'un token (⚠️ Remplace avec un vrai JWT en prod)
+            String token = "fake-jwt-token-" + user.getUserId();
+    
+            // Construire l'objet de réponse avec l'utilisateur et le token
+            Map<String, Object> response = Map.of(
+                "token", token,
+                "user", Map.of(
+                    "userId", user.getUserId(),
+                    "email", user.getEmail(),
+                    "role", user.getRole()
+                )
+            );
+    
+        
 
             // Successful login response (consider returning a JWT token for authentication)
             return ResponseEntity.ok(Map.of(
                 "email", user.getEmail(),
                 "role", user.getRole() // Make sure role is returned
             ));
+
         } catch (Exception e) {
             logger.error("Login error: {}", e.getMessage(), e);
-            return ResponseEntity.internalServerError().body("Login failed: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(Map.of("message", "Login failed: " + e.getMessage()));
         }
-    }
-}
+    }}
+    

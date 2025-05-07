@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Student implements Serializable {
     private int studentId;
 
     @OneToOne
+    @JsonManagedReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

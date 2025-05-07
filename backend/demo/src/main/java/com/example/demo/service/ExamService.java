@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ExamDTO;
 import com.example.demo.model.Exam;
+import com.example.demo.model.TeachingAssignment;
 import com.example.demo.model.Department;
 import com.example.demo.repository.ExamRepository;
+import com.example.demo.repository.TeachingAssignmentRepository;
 import com.example.demo.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +25,8 @@ public class ExamService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+    
+   
 
     // Get all exams and convert them to DTOs
     public List<ExamDTO> getAllExams() {

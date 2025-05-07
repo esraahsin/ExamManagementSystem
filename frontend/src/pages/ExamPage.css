@@ -3,12 +3,44 @@
     margin: 0 auto;
     padding: 20px;
 }
+.add-room-btn {
+    background-color: #4CAF50; /* Couleur de fond verte */
+    color: white; /* Texte en blanc */
+    padding: 10px 20px; /* Espacement autour du texte */
+    border: none; /* Supprime la bordure par défaut */
+    border-radius: 5px; /* Bords arrondis */
+    cursor: pointer; /* Curseur pointer lors du survol */
+    transition: background-color 0.3s ease; /* Transition douce pour la couleur de fond */
+}
+
+.add-room-btn:hover {
+    background-color: #45a049; /* Change la couleur de fond lorsque l'utilisateur survole */
+}
+
+.add-room-btn:focus {
+    outline: none; /* Retire la bordure d'accentuation de focus */
+    box-shadow: 0 0 0 3px rgba(72, 166, 72, 0.5); /* Ajoute une ombre autour du bouton lorsqu'il est en focus */
+}
 
 .search-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+}
+.add-supervisor-btn {
+    background-color: #4CAF50; /* Couleur verte */
+    color: white; /* Texte en blanc */
+    padding: 10px 20px; /* Espacement intérieur */
+    border: none; /* Supprimer la bordure par défaut */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Changer le curseur en pointeur */
+    font-size: 16px; /* Taille de police */
+    transition: background-color 0.3s ease; /* Transition douce lors du survol */
+}
+
+.add-supervisor-btn:hover {
+    background-color: #45a049; /* Couleur verte légèrement plus foncée au survol */
 }
 
 .search-input {

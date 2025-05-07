@@ -1,0 +1,75 @@
+/* Conteneur principal */
+.container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* Table */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Boutons */
+  .button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Message d'erreur */
+  .error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  /* Message de chargement */
+  .loading {
+    font-size: 16px;
+    color: #888;
+  }
+  
+  /* Section du surveillant sélectionné */
+  .selected-invigilator {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+  }
+  
+  .selected-invigilator h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  

@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,10 +29,12 @@ public class Validation implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "exam_id", nullable = false)
+    @JsonBackReference
     private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "validated_by", nullable = false)
+    @JsonBackReference
     private User validatedBy;
 
     @Enumerated(EnumType.STRING)

@@ -11,4 +11,5 @@ import com.example.demo.model.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
+    List<Room> findByIsAvailableTrue();
  }

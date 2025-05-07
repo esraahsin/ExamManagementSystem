@@ -1,0 +1,128 @@
+/* UpdateExam.css */
+
+.update-exam-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-exam-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.update-exam-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group select,
+.form-group button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.form-group select:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.form-group button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+}
+
+.form-group button[type="button"] {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    background-color: #28a745;
+}
+
+.form-group button[type="button"]:hover {
+    background-color: #218838;
+}
+
+.form-group span {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 10px;
+}
+.input-with-arrows {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.arrow {
+    cursor: pointer;
+    font-size: 20px;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.arrow:hover {
+    color: #0056b3;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: #28a745;
+    background-color: #d4edda;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.update-exam-form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-exam-form button[type="submit"]:hover {
+    background-color: #218838;
+}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -31,6 +33,7 @@ public class Room implements Serializable{
     private Date updatedAt;
     
     @OneToMany(mappedBy = "room")
+    @JsonManagedReference
     private List<ExamRoom> examRooms;
     //
 

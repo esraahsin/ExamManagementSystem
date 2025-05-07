@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
@@ -24,6 +25,7 @@ public class Exam implements Serializable {
     @ManyToOne
     @JoinColumn(name = "department_id")
     @JsonIgnoreProperties({"exams", "hibernateLazyInitializer", "handler"})
+    @JsonBackReference
     private Department department;
     
     @Column(nullable = false)

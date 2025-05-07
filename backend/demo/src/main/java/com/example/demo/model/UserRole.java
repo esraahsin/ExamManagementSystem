@@ -1,9 +1,8 @@
 package com.example.demo.model;
-
 public enum UserRole {
-    ADMIN,       // Matches 'ADMIN' in the database
-    CHEF,        // Matches 'CHEF' in the database
-    DIRECTEUR,   // Matches 'DIRECTEUR' in the database
-    ENSEIGNANT,  // Matches 'ENSEIGNANT' in the database
-    ETUDIANT     // Matches 'ETUDIANT' in the database
+    ADMIN,             // Matches 'ADMIN' in the database
+    DEPARTMENT_HEAD,   // Matches 'DEPARTMENT_HEAD'
+    STUDIES_DIRECTOR,  // Matches 'STUDIES_DIRECTOR'
+    TEACHER,           // Matches 'TEACHER'
+    STUDENT            // Matches 'STUDENT'
 }
