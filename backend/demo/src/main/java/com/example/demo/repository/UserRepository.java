@@ -11,6 +11,7 @@ import com.example.demo.model.UserRole;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    long countByRole(UserRole role);
 
     // Find user by email
     Optional<User> findByEmail(String email);

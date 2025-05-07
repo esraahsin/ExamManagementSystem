@@ -42,11 +42,13 @@
 .edit-btn {
     background-color: #ffc107;
     color: white;
+    padding: auto;
 }
 
 .delete-btn {
     background-color: #dc3545;
     color: white;
+    padding: auto;
 }
 /* Bouton PDF */
 .pdf-button {
@@ -98,4 +100,19 @@
 
 .filter-group input[type="time"] {
     margin-top: 5px;
+}
+.exam-details p {
+    margin: 4px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.exam-details h3 {
+    margin: 0 0 8px 0;
+    color: #3498db;
+    font-size: 1.1em;
+}
+
+.difficulty-stars {
+    color: #f1c40f;
 }
